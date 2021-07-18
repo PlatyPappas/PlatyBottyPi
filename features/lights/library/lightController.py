@@ -1,4 +1,6 @@
 import time
+import signal
+import sys
 from rpi_ws281x import PixelStrip, Color
 
 class lightController:
@@ -12,6 +14,7 @@ class lightController:
     self.ledChannel = 0
     self.strip = PixelStrip(self.ledCount, self.ledPin, self.ledFreq, self.ledDma, self.invert, self.brightness, self.ledChannel)
     self.strip.begin()
+    signal.signal(signal.SIGINT, self.signal_handler)
   
   def colorWipe(self, chosenColor, wait_ms=10):
     for i in range(self.strip.numPixels()):
@@ -73,3 +76,8 @@ class lightController:
       for i in range(256):
         self.strip.setBrightness(maxBright - i)
         time.sleep(wait_ms / 1000.0)
+
+  def signal_handler(self, sig, frame):
+    print('You pressed Ctrl+C!')
+    self.colorWipe(Color(0, 0, 0))
+    sys.exit(0)
