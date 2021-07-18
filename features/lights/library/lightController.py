@@ -67,7 +67,7 @@ class lightController:
         for i in range(0, self.strip.numPixels(), 3):
           self.strip.setPixelColor(i + q, 0)
 
-  def pulseBrightness(self, wait_ms=1):
+  def pulseBrightness(self, wait_ms=10):
     while True:
       for i in range(self.minBrightness, self.maxBrightness):
         self.strip.setBrightness(i)
