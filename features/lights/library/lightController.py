@@ -11,12 +11,10 @@ class lightController:
     self.invert = False
     self.ledChannel = 0
     self.strip = PixelStrip(self.ledCount, self.ledPin, self.ledFreq, self.ledDma, self.invert, self.brightness, self.ledChannel)
+    self.strip.begin()
   
   def colorWipe(self, chosenColor, wait_ms=10):
-    print(self.strip.numPixels())
-    print(chosenColor)
     for i in range(self.strip.numPixels()):
-      print("Iterate")
       self.strip.setPixelColor(i, chosenColor)
       self.strip.show()
       time.sleep(wait_ms / 1000.0)
