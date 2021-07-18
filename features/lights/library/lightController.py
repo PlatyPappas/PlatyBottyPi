@@ -13,7 +13,7 @@ class lightController:
     self.minBrightness = 10
     self.invert = False
     self.ledChannel = 0
-    self.strip = PixelStrip(self.ledCount, self.ledPin, self.ledFreq, self.ledDma, self.invert, self.maxBrightness, self.ledChannel)
+    self.strip = PixelStrip(self.ledCount, self.ledPin, self.ledFreq, self.ledDma, self.invert, self.minBrightness, self.ledChannel)
     self.strip.begin()
     signal.signal(signal.SIGINT, self.signal_handler)
   
