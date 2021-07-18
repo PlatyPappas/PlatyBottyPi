@@ -13,8 +13,10 @@ class lightsPlugin(Plugin):
     while True:
       command = self.socket.recv_string()
       parsedCommand = command.split()[1:]
+      print("Command received:")
+      print(parsedCommand)
       if self.validCommand(parsedCommand):
-        threading.Thread(target=self.processCommand, args=(parsedCommand)).start()
+        threading.Thread(target=self.processCommand, args=(parsedCommand,)).start()
       else:
         self.twitchChatInstance.send("Valid colors are: red, dark-red, blue, dark-blue, green, dark-green, purple, pink, orange, yellow, cyan, teal, peach, and white")
   
