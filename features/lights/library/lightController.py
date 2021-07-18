@@ -10,7 +10,7 @@ class lightController:
     self.ledFreq = 800000
     self.ledDma = 10
     self.maxBrightness = 240
-    self.minBrightness = 10
+    self.minBrightness = 80
     self.invert = False
     self.ledChannel = 0
     self.strip = PixelStrip(self.ledCount, self.ledPin, self.ledFreq, self.ledDma, self.invert, self.minBrightness, self.ledChannel)
