@@ -30,6 +30,6 @@ class lightsPlugin(Plugin):
   
   def processCommand(self, command):
     if len(command) == 1:
-      self.lightController.colorWipe(colorLibrary.colors[command])
+      self.lightController.colorWipe(colorLibrary.colors[command[0]])
     else:
       self.lightController.colorWipe(colorLibrary.customColor(command))
