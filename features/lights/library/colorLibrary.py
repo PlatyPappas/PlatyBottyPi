@@ -16,3 +16,6 @@ colors = {
   "dark-red": Color(128, 0, 0),
   "dark-green": Color(0, 100, 0)
 }
+
+def customColor(command):
+  return Color(int(command[0]), int(command[1]), int(command[2]))

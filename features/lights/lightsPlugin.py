@@ -1,4 +1,3 @@
-from features.libraries.lights.lightFeature import lightFeature
 from pluginFramework.plugin import Plugin
 import threading
 from .library import lightController
@@ -10,6 +9,7 @@ class lightsPlugin(Plugin):
     self.lightController = lightController.lightController()
 
   def runFeature(self):
+    threading.Thread(target=self.lightController.pulseBrightness, args=()).start()
     while True:
       command = self.socket.recv_string()
       parsedCommand = command.split()[1:]
@@ -27,4 +27,7 @@ class lightsPlugin(Plugin):
       return False
   
   def processCommand(self, command):
-    
+    if len(command) == 1:
+      self.lightController.colorWipe(colorLibrary.colors[command])
+    else:
+      self.lightController.colorWipe(colorLibrary.customColor(command))
