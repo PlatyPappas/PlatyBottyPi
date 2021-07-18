@@ -32,7 +32,7 @@ class lightsPlugin(Plugin):
   
   def processCommand(self, command):
     if len(command) == 1:
-      if command == 'rainbow':
+      if command[0] == 'rainbow':
         self.lightController.rainbow()
       else:
         self.lightController.colorWipe(colorLibrary.colors[command[0]])
