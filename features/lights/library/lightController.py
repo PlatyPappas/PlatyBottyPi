@@ -16,6 +16,7 @@ class lightController:
     print(self.strip.numPixels())
     print(chosenColor)
     for i in range(self.strip.numPixels()):
+      print("Iterate")
       self.strip.setPixelColor(i, chosenColor)
       self.strip.show()
       time.sleep(wait_ms / 1000.0)
