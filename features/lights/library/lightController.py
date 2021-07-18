@@ -73,12 +73,12 @@ class lightController:
         self.strip.setBrightness(i)
         self.strip.show()
         time.sleep(wait_ms / 1000.0)
-      time.sleep(1000 / 1000.0)
+      time.sleep(wait_ms / 1000.0)
       for i in range(self.maxBrightness, self.minBrightness, -1):
         self.strip.setBrightness(i)
         self.strip.show()
         time.sleep(wait_ms / 1000.0)
-      time.sleep(1000 / 1000.0)
+      time.sleep(wait_ms / 1000.0)
 
   def signal_handler(self, sig, frame):
     self.colorWipe(Color(0, 0, 0), 0)
