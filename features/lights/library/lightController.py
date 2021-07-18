@@ -14,6 +14,7 @@ class lightController:
   
   def colorWipe(self, chosenColor, wait_ms=10):
     print(self.strip.numPixels())
+    print(chosenColor)
     for i in range(self.strip.numPixels()):
       self.strip.setPixelColor(i, chosenColor)
       self.strip.show()
