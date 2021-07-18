@@ -23,7 +23,7 @@ class lightsPlugin(Plugin):
         self.twitchChatInstance.send("Additionally, you can name RGB values. Example: !lights 140 223 37")
   
   def validCommand(self, command):
-    if len(command) == 1 and command[0] in colorLibrary.colors:
+    if len(command) == 1 and (command[0] in colorLibrary.colors or command[0] == 'rainbow'):
       return True
     elif len(command) == 3 and ((int(command[0]) <= 255 and int(command[0]) >= 0) and (int(command[1]) <= 255 and int(command[1]) >= 0) and (int(command[2]) <= 255 and int(command[2]) >= 0)):
       return True
@@ -32,6 +32,9 @@ class lightsPlugin(Plugin):
   
   def processCommand(self, command):
     if len(command) == 1:
-      self.lightController.colorWipe(colorLibrary.colors[command[0]])
+      if command == 'rainbow':
+        self.lightController.rainbow()
+      else:
+        self.lightController.colorWipe(colorLibrary.colors[command[0]])
     else:
       self.lightController.colorWipe(colorLibrary.customColor(command))
