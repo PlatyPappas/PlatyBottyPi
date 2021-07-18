@@ -9,6 +9,7 @@ class lightsPlugin(Plugin):
     self.lightController = lightController.lightController()
 
   def runFeature(self):
+    self.lightController.colorWipe(colorLibrary.colors['purple'])
     threading.Thread(target=self.lightController.pulseBrightness, args=()).start()
     while True:
       command = self.socket.recv_string()
