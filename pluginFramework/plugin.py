@@ -16,9 +16,4 @@ class Plugin(object):
     self.socket.setsockopt_string(zmq.SUBSCRIBE, self.command)
 
   def runFeature(self):
-    while True:
-      command = self.socket.recv_string()
-      threading.Thread(target=self.featureHandler, args=(command.split()[1:],)).start()
-  
-  def featureHandler(self, command):
     raise NotImplementedError
