@@ -9,10 +9,11 @@ class lightController:
     self.ledPin = 18
     self.ledFreq = 800000
     self.ledDma = 10
-    self.brightness = 180
+    self.maxBrightness = 240
+    self.minBrightness = 10
     self.invert = False
     self.ledChannel = 0
-    self.strip = PixelStrip(self.ledCount, self.ledPin, self.ledFreq, self.ledDma, self.invert, self.brightness, self.ledChannel)
+    self.strip = PixelStrip(self.ledCount, self.ledPin, self.ledFreq, self.ledDma, self.invert, self.maxBrightness, self.ledChannel)
     self.strip.begin()
     signal.signal(signal.SIGINT, self.signal_handler)
   
@@ -67,19 +68,17 @@ class lightController:
           self.strip.setPixelColor(i + q, 0)
 
   def pulseBrightness(self, wait_ms=.001):
-    maxBright = 255
     while True:
-      for i in range(256):
+      for i in range(self.minBrightness, self.maxBrightness):
         self.strip.setBrightness(i)
         self.strip.show()
         time.sleep(wait_ms / 1000.0)
       time.sleep(wait_ms / 1000.0)
-      for i in range(256):
-        self.strip.setBrightness(maxBright - i)
+      for i in range(self.maxBrightness, self.minBrightness, -1):
+        self.strip.setBrightness(i)
         self.strip.show()
         time.sleep(wait_ms / 1000.0)
 
   def signal_handler(self, sig, frame):
-    print('You pressed Ctrl+C!')
     self.colorWipe(Color(0, 0, 0))
     sys.exit(0)
