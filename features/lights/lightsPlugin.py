@@ -35,7 +35,7 @@ class lightsPlugin(Plugin):
       if command[0] == 'rainbow':
         self.lightController.rainbow()
       elif command[0] == 'rainbowCycle':
-        self.lightController.rainbowCycle*()
+        self.lightController.rainbowCycle()
       else:
         self.lightController.colorWipe(colorLibrary.colors[command[0]])
     else:
