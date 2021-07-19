@@ -20,7 +20,7 @@ class lightsPlugin(Plugin):
         threading.Thread(target=self.processCommand, args=(parsedCommand,)).start()
       else:
         self.twitchChatInstance.send(
-            "Valid colors are: red, dark-red, blue, dark-blue, green, dark-green, purple, pink, orange, yellow, cyan, teal, peach, and white.\nAdditionally, you can name RGB values. Example: !lights 140 223 37")
+            "Valid colors are: red, dark-red, blue, dark-blue, green, dark-green, purple, pink, orange, yellow, cyan, teal, peach, and white.Additionally, you can name RGB values. Example: !lights 140 223 37")
   
   def validCommand(self, command):
     if len(command) == 1 and (command[0] in colorLibrary.colors):
