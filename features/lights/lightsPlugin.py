@@ -25,8 +25,14 @@ class lightsPlugin(Plugin):
   def validCommand(self, command):
     if len(command) == 1 and (command[0] in colorLibrary.colors):
       return True
-    elif len(command) == 3 and ((int(command[0]) <= 255 and int(command[0]) >= 0) and (int(command[1]) <= 255 and int(command[1]) >= 0) and (int(command[2]) <= 255 and int(command[2]) >= 0)):
-      return True
+    elif len(command) == 3:
+      if command[0].isdigit() and command[1].isdigit() and command[2].isdigit():
+        if ((int(command[0]) <= 255 and int(command[0]) >= 0) and (int(command[1]) <= 255 and int(command[1]) >= 0) and (int(command[2]) <= 255 and int(command[2]) >= 0)):
+          return True
+        else:
+          return False
+      else:
+        return False
     else:
       return False
   
