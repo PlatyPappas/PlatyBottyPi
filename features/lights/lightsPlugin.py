@@ -32,6 +32,8 @@ class lightsPlugin(Plugin):
             messToPack = tempMess[:-2]
           elif recombinedCommand.lower() == "help":
             messToPack = "For color options, type: !lights options. Alternatively, you can name RGB values. Example: !lights 140 223 37"
+          else:
+            print("Command invalid")
         else:
           print("Command invalid")
         
