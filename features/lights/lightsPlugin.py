@@ -10,6 +10,13 @@ class lightsPlugin(Plugin):
     self.interfaceSocket = self.interfaceContext.socket(zmq.REQ)
     self.interfaceSocket.connect("tcp://10.0.0.231:%s" % "2555")
 
+    modeContext = zmq.Context()
+    modeSocket = modeContext.socket(zmq.REQ)
+    modeSocket.connect("tcp://10.0.0.231:%s" % "2556")
+    modeSocket.send_string("WIPE")
+    modeSocket.recv_string()
+    modeSocket.close()
+
   def runFeature(self):
     while self.serviceRunning:
       command = self.pluginSubSocket.recv_string()
