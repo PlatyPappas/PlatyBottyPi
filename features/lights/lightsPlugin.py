@@ -20,7 +20,6 @@ class lightsPlugin(Plugin):
         print("Command valid")
         self.processCommand(parsedCommand)
       else:
-        print("Command invalid")
         separator = ' '
         recombinedCommand = separator.join(parsedCommand)
         messToPack = "For color options, type: !lights options. For instructions, type: !light help"
@@ -33,6 +32,8 @@ class lightsPlugin(Plugin):
             messToPack = tempMess[:-2]
           elif recombinedCommand.lower() == "help":
             messToPack = "For color options, type: !lights options. Alternatively, you can name RGB values. Example: !lights 140 223 37"
+        else:
+          print("Command invalid")
         
         messToSend = {"message": messToPack}
         jsonMess = json.dumps(messToSend)
