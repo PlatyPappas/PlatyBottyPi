@@ -11,16 +11,30 @@ class lightsPlugin(Plugin):
     self.interfaceSocket.connect("tcp://10.0.0.231:%s" % "2555")
 
   def runFeature(self):
-    print("Running lights feature")
     while self.serviceRunning:
       command = self.pluginSubSocket.recv_string()
       parsedCommand = command.split()[1:]
-      print("Command received:")
-      print(parsedCommand)
+      if parsedCommand:
+        print("Command received: " + command)
       if self.validCommand(parsedCommand):
+        print("Command valid")
         self.processCommand(parsedCommand)
       else:
-        messToSend = {"message": "Valid colors are: red, dark-red, blue, dark-blue, green, dark-green, purple, pink, orange, yellow, cyan, teal, peach, and white. Additionally, you can name RGB values. Example: !lights 140 223 37"}
+        print("Command invalid")
+        separator = ' '
+        recombinedCommand = separator.join(parsedCommand)
+        messToPack = "For color options, type: !lights options. For instructions, type: !light help"
+        if recombinedCommand:
+          if recombinedCommand.lower() == "options" or recombinedCommand.lower() == "option":
+            tempMess = "Color options available: "
+            for key in colorLibrary.colors:
+              tempMess += key
+              tempMess += ", "
+            messToPack = tempMess[:-2]
+          elif recombinedCommand.lower() == "help":
+            messToPack = "For color options, type: !lights options. Alternatively, you can name RGB values. Example: !lights 140 223 37"
+        
+        messToSend = {"message": messToPack}
         jsonMess = json.dumps(messToSend)
         self.serverSubSocket.send_json(jsonMess)
         self.serverSubSocket.recv_string()
