@@ -1,26 +1,30 @@
 from pluginFramework.plugin import Plugin
-import threading
-from .library import lightController
+import zmq
+import json
 from .library import colorLibrary
 
 class lightsPlugin(Plugin):
-  def __init__(self, twitchChatInstance, port):
-    super().__init__(twitchChatInstance, port, "Lights Plugin", "!lights")
-    self.lightController = lightController.lightController()
+  def __init__(self, pluginSubPort, serverSubPort):
+    super().__init__(pluginSubPort, serverSubPort, "Lights Plugin", "!lights")
+    self.interfaceContext = zmq.Context()
+    self.interfaceSocket = self.interfaceContext.socket(zmq.REQ)
+    self.interfaceSocket.connect("tcp://10.0.0.231:%s" % "2555")
 
   def runFeature(self):
-    self.lightController.colorWipe(colorLibrary.colors['purple'])
-    threading.Thread(target=self.lightController.pulseBrightness, args=()).start()
-    while True:
-      command = self.socket.recv_string()
+    print("Running lights feature")
+    while self.serviceRunning:
+      command = self.pluginSubSocket.recv_string()
       parsedCommand = command.split()[1:]
       print("Command received:")
       print(parsedCommand)
       if self.validCommand(parsedCommand):
-        threading.Thread(target=self.processCommand, args=(parsedCommand,)).start()
+        self.processCommand(parsedCommand)
       else:
-        self.twitchChatInstance.send(
-            "Valid colors are: red, dark-red, blue, dark-blue, green, dark-green, purple, pink, orange, yellow, cyan, teal, peach, and white.Additionally, you can name RGB values. Example: !lights 140 223 37")
+        messToSend = {"message": "Valid colors are: red, dark-red, blue, dark-blue, green, dark-green, purple, pink, orange, yellow, cyan, teal, peach, and white. Additionally, you can name RGB values. Example: !lights 140 223 37"}
+        jsonMess = json.dumps(messToSend)
+        self.serverSubSocket.send_json(jsonMess)
+        self.serverSubSocket.recv_string()
+    self.closeSockets()
   
   def validCommand(self, command):
     if len(command) == 1 and (command[0] in colorLibrary.colors):
@@ -38,6 +42,9 @@ class lightsPlugin(Plugin):
   
   def processCommand(self, command):
     if len(command) == 1:
-      self.lightController.colorWipe(colorLibrary.colors[command[0]])
+      self.interfaceSocket.send_string(colorLibrary.colors[command[0]])
     else:
-      self.lightController.colorWipe(colorLibrary.customColor(command))
+      separator = ' '
+      self.interfaceSocket.send_string(separator.join(command))
+    reply = self.interfaceSocket.recv_string()
+    print(reply)

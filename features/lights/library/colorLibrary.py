@@ -1,21 +1,16 @@
-from rpi_ws281x import Color
-
 colors = {
-  "red": Color(255, 0, 0),
-  "green": Color(0, 255, 0),
-  "blue": Color(0, 0, 255),
-  "purple": Color(148, 0, 211),
-  "orange": Color(255, 140, 0),
-  "pink": Color(255, 20, 147),
-  "white": Color(245, 245, 245),
-  "yellow": Color(255, 255, 0),
-  "cyan": Color(0, 255, 255),
-  "teal": Color(0, 128, 128),
-  "peach": Color(255, 218, 185),
-  "dark-blue": Color(0, 0, 128),
-  "dark-red": Color(128, 0, 0),
-  "dark-green": Color(0, 100, 0)
+  "red": "255 0 0",
+  "green": "0 255 0",
+  "blue": "0 0 255",
+  "purple": "148 0 211",
+  "orange": "255 140 0",
+  "pink": "255 20 147",
+  "white": "245 245 245",
+  "yellow": "255 255 0",
+  "cyan": "0 255 255",
+  "teal": "0 128 128",
+  "peach": "255 218 185",
+  "dark-blue": "0 0 128",
+  "dark-red": "128 0 0",
+  "dark-green": "0 100 0"
 }
-
-def customColor(command):
-  return Color(int(command[0]), int(command[1]), int(command[2]))
